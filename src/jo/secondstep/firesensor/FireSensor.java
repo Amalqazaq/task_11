@@ -1,27 +1,33 @@
 package jo.secondstep.firesensor;
 
+import java.util.*;
 public class FireSensor {
-   
+    List<FireEmergency> fireEmergencies=new ArrayList<>();
+
+    
+    public void addEmergency(FireEmergency emergency) {
+    	fireEmergencies.add(emergency);
+    }
 	
-	
-	
-	public void sendSMS(String phoneNumber) {
-		System.out.println("send message for: "+phoneNumber);
-	}
-	
-	public void callFireDepartment() {
-		System.out.println("call 911");
-	}
-	
-	
-	public void waterSplashing() {
-		System.out.println("water splashing");
-	}
-	
-	public void update(String phoneNumber) {
-		 sendSMS(phoneNumber);
-		 callFireDepartment();
-		 waterSplashing();
+    public void removeEmergency(FireEmergency emergency) {
+ 	   fireEmergencies.remove(emergency);
+    }
+    
+	public void update() {
+		
+		/*Thread t1=new Thread(new SmsMesseage("7787887"));
+		t1.setName("Thread-1");
+		System.out.println(t1.getName());
+		t1.start();*/
+		
+		 int i=1;
+		for(FireEmergency emergency:fireEmergencies) {
+			Thread t=new Thread(emergency);
+			t.setName("thread"+i);
+			i++;
+			System.out.println(t.getName());
+			t.start();
+		}
 	}
 	
 }
